@@ -16,8 +16,11 @@ const SQL: string = `
 `;
 
 export const popul = async():Promise<void> =>{
+
+    const isTest:boolean = process.env.NODE_ENV == 'test';
+
     const client = new Client({
-        connectionString: process.env.DEVCONNECT
+        connectionString: isTest? process.env.TESTCONNECT : process.env.DEVCONNECT
     });
     try{
         await client.connect();

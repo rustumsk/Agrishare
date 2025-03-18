@@ -11,4 +11,14 @@ export const generateTokenbyEmail = (email:string):string =>{
         process.env.JWT_SECRET_KEY as string,
         {expiresIn: '7d'}
     )
-}
+};
+
+export const generateTokenbyId = (user_id:number):string =>{
+    return jwt.sign(
+        {
+            user_id
+        },
+        process.env.JWT_SECRET_KEY as string,
+        {expiresIn: '7d'}
+    )
+};

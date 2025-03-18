@@ -1,7 +1,7 @@
-import { readUserbyEmail } from "../../src/model/user/read.user";
+import { checkUserByEmail } from "../../src/model/user/read.user";
 import { pool } from "../../src/config/db/pool";
 
-describe("readUserbyEmail", () => {
+describe("checkUserByEmail", () => {
     const mockEmail = 'rustum@gmail.com';
 
     beforeAll(async () => {
@@ -16,13 +16,13 @@ describe("readUserbyEmail", () => {
     });
 
     it("should return true if a user exists", async () => {
-        const result = await readUserbyEmail(mockEmail);
+        const result = await checkUserByEmail(mockEmail);
         expect(result).toBe(true);
 
     });
 
     it("should return false if no user exists", async () => {
-        const result = await readUserbyEmail("Nigga");
+        const result = await checkUserByEmail("Nigga");
 
         expect(result).toBe(false);
 

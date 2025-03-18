@@ -3,8 +3,7 @@ import { HttpStatus } from "../../config/types/enum";
 import { User } from "../../config/types/types";
 import { hashPassword } from "../../helper/password.helper";
 import { createLocalModel } from "../../model/user/create.user";
-import { readUserbyEmail } from "../../model/user/read.user";
-
+import { checkUserByEmail } from "../../model/user/read.user";
 //For local signup/register
 export const localSignupController = async (req:Request,res:Response) =>{
     const body = req.body;
@@ -19,7 +18,7 @@ export const localSignupController = async (req:Request,res:Response) =>{
         contact_no: body.contact_no,
         role: body.role
     }
-    const check = await readUserbyEmail(user.user_email);
+    const check = await checkUserByEmail(user.user_email);
 
     if (check){
         res.status(HttpStatus.CONFLICT).send({message:"User already created!"});

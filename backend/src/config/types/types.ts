@@ -8,9 +8,15 @@ export interface User{
     password: string,
     user_email: string,
     bio?: string | null,
+    google_id?:string | null,
     contact_no: string|null,
     image_url?: string | null,
     role: Role
+}
+
+export interface Blog{
+  user_id: number,
+  blog_content: JSON,
 }
 
 export interface GoogleProfile extends Profile {
@@ -33,3 +39,11 @@ export interface GoogleUser{
         google_id: string
     };
 };
+
+export interface Post {
+  user_id: number;
+  post_title: string;
+  post_description: string;
+  post_images?: string[]; 
+  post_videos?: string[];
+}

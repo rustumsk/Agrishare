@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import { popul } from "./config/db/populate";
 import loginRouter from "./routes/public/login.route";
-import googleRouter from "./routes/public/google.route";
-// import passport from "./config/passport/google.config";
+import blogRouter from "./routes/private/blog.route";
+import googleRouter from "./routes/auth/google.route";
 import { signupRouter } from "./routes/public/signup.route";
 dotenv.config();
 
@@ -18,6 +18,7 @@ popul();
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/google', googleRouter);
+app.use('/blog', blogRouter);
 
 app.get("/", (req: Request, res:Response) => {
   res.status(200).json({ message: "Welcome to the API!" }); 

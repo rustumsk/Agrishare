@@ -4,8 +4,9 @@ import { User } from "../../config/types/types";
 import { hashPassword } from "../../helper/password.helper";
 import { createLocalModel } from "../../model/user/create.user";
 import { checkUserByEmail } from "../../model/user/read.user";
-//For local signup/register
-export const localSignupController = async (req:Request,res:Response) =>{
+
+//For signup/register
+export const signUpController = async (req:Request,res:Response) =>{
     const body = req.body;
     const password = await hashPassword(req.body.password);
 

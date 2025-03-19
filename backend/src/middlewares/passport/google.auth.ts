@@ -2,7 +2,7 @@ import { Request,Response } from "express";
 import { GoogleUser } from "../../config/types/types";
 import { HttpStatus } from "../../config/types/enum";
 
-export const googleAuthController = (req:Request, res:Response) =>{
+export const googleAuthMiddleware = (req:Request, res:Response) =>{
     const user = req.user as GoogleUser;
 
     // check if the user already exists

@@ -14,9 +14,20 @@ export interface User{
     role: Role
 }
 
+export interface Pool{
+  user_id: number,
+  post_title: string,
+  post_description: string,
+  post_videos?: object | null,
+  post_photos?: object | null
+}
+
 export interface Blog{
   user_id: number,
-  blog_content: JSON,
+  blog_title: string,
+  blog_description: string,
+  blog_photo?: string | null,
+  blog_content: object,
 }
 
 export interface GoogleProfile extends Profile {

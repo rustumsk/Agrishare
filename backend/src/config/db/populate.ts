@@ -16,12 +16,25 @@ const SQL: string = `
     );
 
     CREATE TABLE IF NOT EXISTS blog(
-        post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        blog_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),
+        blog_title VARCHAR(255) NOT NULL,
+        blog_description VARCHAR(255),
+        blog_photo VARCHAR(255) NOT NULL,
         blog_content JSONB NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-    
+
+    CREATE TABLE IF NOT EXISTS post(
+        post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        user_id INT NOT NULL REFERENCES users(user_id),
+        post_title VARCHAR(255) NOT NULL,
+        post_description VARCHAR(255) NOT NULL,
+        post_videos JSONB,
+        post_photos JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
     CREATE TABLE IF NOT EXISTS post (
         post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),

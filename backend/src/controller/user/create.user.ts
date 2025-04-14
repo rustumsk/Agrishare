@@ -4,21 +4,24 @@ import { User } from "../../config/types/types";
 import { hashPassword } from "../../helper/password.helper";
 import { createLocalModel } from "../../model/user/create.user";
 import { checkUserByEmail } from "../../model/user/read.user";
+import jwt from 'jsonwebtoken';
 
 //For signup/register
 export const signUpController = async (req:Request,res:Response) =>{
     const body = req.body;
     const password = await hashPassword(req.body.password);
+    const google = body.google;
 
     const user:User = {
         user_name: body.user_name,
         password: password,
-        user_email: body.user_email,
+        user_email: google? jwt.decode(JSON.parse(body.user_email)).email : body.user_email,
         bio: body.bio,
         image_url: body.image_url,
         contact_no: body.contact_no,
         role: body.role
     }
+
     const check = await checkUserByEmail(user.user_email);
 
     if (check){

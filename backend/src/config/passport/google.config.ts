@@ -19,13 +19,11 @@ passport.use(new GoogleStrategy({
 
         //if it exists generate an object with the type and the jwt token for the next route handler.
         if (existingUser){
-            const token = generateTokenbyId(existingUser.email);
-
+            const token = generateTokenbyId(existingUser.user_id);
             const existProfile: GoogleUser = {
                 type: "Existing",
                 token: token
             } 
-            
             return done(null, existProfile);
         }
         // if the email isnt registered, generate additional info for registration.

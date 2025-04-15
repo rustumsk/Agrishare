@@ -11,8 +11,9 @@ export const googleAuthMiddleware = (req:Request, res:Response) =>{
     // if it exists redirect to the appropriate frontend(TO - DO) and send the jwt.
     if (user.type === "Existing"){
         console.log("user exists!");
-        console.log()
-        res.status(HttpStatus.OK).send({message:"jwt token", token:user.token});
+        console.log();
+        res.cookie('token', user.token, { httpOnly: false, secure: true, sameSite:'lax'});
+        res.redirect(`${process.env.F_URL}/home`);
         return;
     }
 

@@ -28,21 +28,16 @@ const SQL: string = `
     CREATE TABLE IF NOT EXISTS post(
         post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),
-        post_title VARCHAR(255) NOT NULL,
         post_description VARCHAR(255) NOT NULL,
-        post_videos JSONB,
-        post_photos JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS post (
-        post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        user_id INT NOT NULL REFERENCES users(user_id),
-        post_title VARCHAR(50) NOT NULL,
-        post_description VARCHAR(50) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    CREATE TABLE IF NOT EXISTS tags (
+        tag_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        post_id INT NOT NULL REFERENCES users(user_id),
+        tag_name VARCHAR(255) NOT NULL
     );
-
+    
     CREATE TABLE IF NOT EXISTS post_images (
         p_images_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INT NOT NULL REFERENCES post(post_id) ON DELETE CASCADE,

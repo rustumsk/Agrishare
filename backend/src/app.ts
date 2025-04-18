@@ -4,6 +4,7 @@ import cors from "cors";
 import { popul } from "./config/db/populate";
 import loginRouter from "./routes/public/login.route";
 // import blogRouter from "./routes/private/blog.route";
+import postRouter from "./routes/private/post.route";
 import googleRouter from "./routes/auth/google.route";
 import { signupRouter } from "./routes/public/signup.route";
 dotenv.config();
@@ -18,6 +19,7 @@ popul();
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/google', googleRouter);
+app.use('/post', postRouter);
 // app.use('/blog', blogRouter);
 
 app.get("/", (req: Request, res:Response) => {

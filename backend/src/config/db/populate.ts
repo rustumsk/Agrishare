@@ -35,13 +35,15 @@ const SQL: string = `
     CREATE TABLE IF NOT EXISTS tags (
         tag_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INT NOT NULL REFERENCES users(user_id),
-        tag_name VARCHAR(255) NOT NULL
+        tag_name VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     
     CREATE TABLE IF NOT EXISTS post_images (
         p_images_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INT NOT NULL REFERENCES post(post_id) ON DELETE CASCADE,
-        image_url VARCHAR(255) NOT NULL
+        image_url VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE IF NOT EXISTS post_videos (

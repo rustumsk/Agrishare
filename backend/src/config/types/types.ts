@@ -54,6 +54,10 @@ export interface GoogleUser{
 export interface Post {
   user_id: number;
   post_description: string;
-  media?: File[] | null;
-  tags?: string[] | null;
+}
+
+export interface PostMedia{
+  url: string,
+  public_id: string,
+  resource_type: string
 }

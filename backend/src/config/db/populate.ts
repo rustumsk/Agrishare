@@ -34,7 +34,7 @@ const SQL: string = `
 
     CREATE TABLE IF NOT EXISTS tags (
         tag_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        post_id INT NOT NULL REFERENCES users(user_id),
+        post_id INT NOT NULL REFERENCES post(post_id),
         tag_name VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );

@@ -26,7 +26,7 @@ export interface Blog{
   user_id: number,
   blog_title: string,
   blog_description: string,
-  blog_photo?: string | null,
+  blog_photo: string,
   blog_content: object,
 }
 

@@ -25,6 +25,7 @@ export interface Pool{
 export interface Blog{
   user_id: number,
   blog_title: string,
+  blog_slug: string,
   blog_description: string,
   blog_photo: string,
   blog_content: object,

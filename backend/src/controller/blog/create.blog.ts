@@ -7,13 +7,16 @@ export const createBlogController = async(req:Request, res:Response): Promise<vo
     const user_token = req.body.token;
     const id = jwt.decode(user_token);
     try{ 
+        
         const blog = {
             user_id: id.user_id,
             blog_title: req.body.title,
+            blog_slug: req.body.blog_slug,
             blog_description: req.body.description,
             blog_photo: req.body.imageUrl,
             blog_content: req.body.content,
         }
+
         console.log( typeof req.body.content);
         console.log(req.body.content);
         await blogCreate(blog);

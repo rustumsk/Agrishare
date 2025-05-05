@@ -19,6 +19,7 @@ const SQL: string = `
         blog_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),
         blog_title VARCHAR(255) NOT NULL,
+        blog_slug VARCHAR(255) NOT NULL UNIQUE,
         blog_description VARCHAR(255),
         blog_photo VARCHAR(255) NOT NULL,
         blog_content JSONB NOT NULL,

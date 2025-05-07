@@ -26,6 +26,15 @@ const SQL: string = `
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS blog_draft(
+        blog_draft_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        blog_id INT NOT NULL REFERENCES blog(blog_id),
+        blog_content JSONB NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        is_published BOOLEAN DEFAULT FALSE
+    );
+
     CREATE TABLE IF NOT EXISTS post(
         post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),

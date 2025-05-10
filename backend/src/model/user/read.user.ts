@@ -48,3 +48,13 @@ export const getUserByName = async(user_name:string):Promise<Object> =>{
         throw(e);
     }
 }
+
+export const getUsers = async(user_id:string):Promise<Object> =>{
+    try{
+        const result = await pool.query("SELECT * FROM Users LIMIT BY 10");
+        return result.rows[0];
+    }catch(e){
+        console.log(e);
+        throw(e);
+    }
+}

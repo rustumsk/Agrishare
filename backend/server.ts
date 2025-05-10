@@ -21,11 +21,10 @@ const io = new Server<
   }
 });
 
-io.use(authSocket as any);
-
 io.on("connection", (socket) => {
     const user = (socket as any).user;
     console.log(`A user connected: ${user}`);
+
     socket.on("disconnect", () => {
         console.log("A user disconnected");
     });

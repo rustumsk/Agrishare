@@ -5,5 +5,5 @@ import { getPostForFeedController } from "../../controller/post/get.post";
 const postRouter = Router();
 
 postRouter.post('/', authorizeUser, createPostController);
-postRouter.get('/', getPostForFeedController);
+postRouter.get('/feed', getPostForFeedController);
 export default postRouter;

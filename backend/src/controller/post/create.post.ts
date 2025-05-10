@@ -8,11 +8,12 @@ import { HttpStatus } from '../../config/types/enum';
 
 export const createPostController = async(req:Request, res:Response): Promise<void> => {
     const tagArr = req.body.tags; 
-    const desc = req.body.content;
+    const desc = req.body.description;
     const urls = req.body.media;
     const user_token = req.body.token;
     console.log("Hi");
     console.log(user_token);
+    console.log(req.body);
     const decoded = jwt.decode(user_token);
 
     console.log('desc', desc);

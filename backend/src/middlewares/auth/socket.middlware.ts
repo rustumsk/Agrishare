@@ -1,8 +1,9 @@
 import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-export const authSocket = (socket: any, next: NextFunction) => {
+export const authSocket = (socket: any, next:any) => {
   const token = socket.handshake.auth.token;
+
   if (!token){
         socket.disconnect();
         console.log("A user disconnected due to missing token");

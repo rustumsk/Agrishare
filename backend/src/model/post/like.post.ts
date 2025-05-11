@@ -8,7 +8,7 @@ export const likePost = async (post_id: any, user_id: any) => {
     );
     console.log("Post liked!");
   } catch (e) {
-    console.error("Error liking post:", e);
+    console.log(e);
     throw e;
   }
 };
@@ -21,7 +21,7 @@ export const unlikePost = async (post_id: any, user_id: any) => {
     );
     console.log("Post unliked!");
   } catch (e) {
-    console.error("Error unliking post:", e);
+    console.log(e);
     throw e;
   }
 };

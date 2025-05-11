@@ -4,6 +4,8 @@ import { likePost,unlikePost } from "../../model/post/like.post";
 
 export const likePostController = async(req:Request, res:Response) =>{
     const {user_id, post_id} = req.body;
+    console.log("Hello!");
+    console.log(user_id, post_id);
     try{
         await likePost(post_id, user_id);
         res.status(HttpStatus.OK).send("Liked!");

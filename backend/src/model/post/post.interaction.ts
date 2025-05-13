@@ -25,3 +25,15 @@ export const unlikePost = async (post_id: any, user_id: any) => {
     throw e;
   }
 };
+
+export const commentPost = async(post_id:string | number, user_id:string | number, comment:string) =>{
+  try{
+    await pool.query(
+      `INSERT INTO post_comments(post_id, user_id, content) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,[post_id,user_id,comment]
+    );
+    console.log("Post commented!");
+  }catch(e){
+    console.log(e);
+    throw e;
+  }
+}

@@ -3,6 +3,7 @@ import { Request,Response } from "express";
 import { getFollowerSuggestion, getUserById, getMutualFollowers } from "../../model/user/read.user";
 import { followUser } from "../../model/user/follow.user";
 import { HttpStatus } from "../../config/types/enum";
+import { messageUser } from '../../model/user/user.message';
 
 export const getFollowerSuggestionController = async(req: Request, res:Response) =>{
     const {user_id} = req.query;
@@ -46,6 +47,17 @@ export const getMutualFollowersController = async(req:Request, res:Response) =>{
         const data = await getMutualFollowers(user_id);
         console.log(data);
         res.send(data);
+    }catch(e){
+        console.log(e);
+        res.status(HttpStatus.BAD_REQUEST).send("Bad Request");
+    }
+}
+
+export const messageUserController = async(req:Request, res:Response) =>{
+    const {sender_id, receiver_id, content} = req.body;
+    try{
+        await messageUser(sender_id, receiver_id, content);
+        res.status(HttpStatus.OK).send("Message sent!");
     }catch(e){
         console.log(e);
         res.status(HttpStatus.BAD_REQUEST).send("Bad Request");

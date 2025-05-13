@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpStatus } from "../../config/types/enum";
-import { likePost,unlikePost } from "../../model/post/like.post";
+import { likePost,unlikePost, commentPost } from "../../model/post/post.interaction";
 
 export const likePostController = async(req:Request, res:Response) =>{
     const {user_id, post_id} = req.body;
@@ -25,3 +25,14 @@ export const unlikePostController = async(req:Request, res:Response) =>{
         res.status(HttpStatus.BAD_REQUEST).send("Bad Request!");
     }
 };
+
+export const commentPostController = async(req:Request, res:Response) =>{
+    const {user_id, post_id, comment} = req.body;
+    try{
+        await commentPost(post_id, user_id, comment);
+        res.status(HttpStatus.OK).send("Commented!");
+    }catch(e){
+        console.log(e);
+        res.status(HttpStatus.BAD_REQUEST).send("Bad Request!");
+    }
+}

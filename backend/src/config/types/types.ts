@@ -51,7 +51,12 @@ export interface GoogleUser{
         google_id: string
     };
 };
-
+export interface Message {
+  roomId: string;
+  senderId: string;
+  content: string;
+  timestamp?: string; // optional, can be added server-side
+}
 export interface Post {
   user_id: number;
   post_description: string;
@@ -71,10 +76,19 @@ export interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
+  like: (data: { post_id: number; like_count: number; user_id: number }) => void;
+  unlike: (data: { post_id: number; like_count: number; user_id: number }) => void;
+  comment: (data: { post_id: number; comments: any;}) => void;
+  newMessage: (msg: Message) => void;
+  notification: (msg: any) => void;
+
 }
 
 export interface ClientToServerEvents {
   hello: () => void;
+  joinRoom: (roomId: any) => void;
+  sendMessage: (msg: Message) => void;
+  notify: (data: any) => void;
 }
 
 export interface InterServerEvents {

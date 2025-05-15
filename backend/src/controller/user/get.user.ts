@@ -1,9 +1,9 @@
 import { getUsers } from "../../model/user/read.user";
 import { Request,Response } from "express";
-import { getFollowerSuggestion, getUserById, getMutualFollowers } from "../../model/user/read.user";
+import { getFollowerSuggestion, getUserById, getMutualFollowers, getUserForProfile } from "../../model/user/read.user";
 import { followUser } from "../../model/user/follow.user";
 import { HttpStatus } from "../../config/types/enum";
-import { messageUser } from '../../model/user/user.message';
+import { messageUser, getMessages } from '../../model/user/user.message';
 
 export const getFollowerSuggestionController = async(req: Request, res:Response) =>{
     const {user_id} = req.query;
@@ -58,6 +58,29 @@ export const messageUserController = async(req:Request, res:Response) =>{
     try{
         await messageUser(sender_id, receiver_id, content);
         res.status(HttpStatus.OK).send("Message sent!");
+    }catch(e){
+        console.log(e);
+        res.status(HttpStatus.BAD_REQUEST).send("Bad Request");
+    }
+}
+
+export const getMessagesController = async (req: Request, res: Response) => {
+  const { sender_id, receiver_id } = req.query;
+  try {
+    const data = await getMessages(sender_id, receiver_id);
+    res.status(HttpStatus.OK).send(data); 
+  } catch (e) {
+    console.error(e);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+  }
+};
+
+export const getUserForProfleController = async(req:Request, res:Response) =>{
+    const {user_id} = req.query;
+    try{
+        console.log(user_id);
+        const data = await getUserForProfile(user_id);
+        res.status(HttpStatus.OK).send(data);
     }catch(e){
         console.log(e);
         res.status(HttpStatus.BAD_REQUEST).send("Bad Request");

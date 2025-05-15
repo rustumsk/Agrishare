@@ -10,7 +10,7 @@ const SQL = `
         user_email VARCHAR(50) UNIQUE NOT NULL,
         google_id VARCHAR(50) UNIQUE,
         bio VARCHAR(200),
-        image_url VARCHAR(255) DEFAULT 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' ,
+        image_url VARCHAR(255) DEFAULT 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
         contact_no VARCHAR(50),
         role VARCHAR(10) DEFAULT 'USER' CHECK (role IN ('ADMIN', 'USER'))
     );
@@ -54,7 +54,7 @@ const SQL = `
     CREATE TABLE IF NOT EXISTS post (
         post_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INT NOT NULL REFERENCES users(user_id),
-        post_description VARCHAR(255) NOT NULL,
+        post_description TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 

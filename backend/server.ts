@@ -10,7 +10,7 @@ import type { ClientToServerEvents, ServerToClientEvents, InterServerEvents, Soc
 
 const server = http.createServer(app);
 
-const io = new Server<
+export const io = new Server<
   ClientToServerEvents,
   ServerToClientEvents,
   InterServerEvents,
@@ -25,6 +25,20 @@ io.on("connection", (socket) => {
     const user = (socket as any).user;
     console.log(`A user connected: ${user}`);
 
+    socket.on("joinRoom", (roomId) =>{
+      socket.join(roomId);
+    });
+    socket.on('sendMessage', (msg) => {
+      io.to(msg.roomId).emit('newMessage', msg);
+    });
+    socket.on('notify', (data) => {
+      const {receiver_id, type} = data;
+      console.log(receiver_id, type);
+      io.to(receiver_id).emit('notification', {
+        type: type,
+        time: new Date().toISOString(),
+      });
+   });
     socket.on("disconnect", () => {
         console.log("A user disconnected");
     });

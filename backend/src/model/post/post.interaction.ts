@@ -37,3 +37,29 @@ export const commentPost = async(post_id:string | number, user_id:string | numbe
     throw e;
   }
 }
+
+export const sendNotif = async (user_id: any, type: any, text:any = " ") => {
+  try {
+    await pool.query(
+      `INSERT INTO notifications(user_id, type, message) VALUES ($1, $2, $3)`,
+      [user_id, type, text]
+    );
+    console.log("Notification sent!");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+export const getNotifs = async (user_id: any) => {
+  try {
+    const result = await pool.query(
+      `SELECT type, created_at FROM notifications WHERE user_id = $1 ORDER BY created_at DESC`,
+      [user_id]
+    );
+    return result.rows;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}

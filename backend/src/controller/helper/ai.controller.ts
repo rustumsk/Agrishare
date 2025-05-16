@@ -1,6 +1,6 @@
 import { Request,Response } from "express";
 import { HttpStatus } from "../../config/types/enum";
-import { summarizeContent, convertToText } from "../../services/ai.service";
+import { summarizeContent, convertToText, chatBot } from "../../services/ai.service";
 
 export const aiSummarizeController = async (req: Request, res: Response) => {
     const { content } = req.body;
@@ -21,6 +21,17 @@ export const aiImageController = async (req: Request, res: Response) => {
         console.log(data);
         res.status(HttpStatus.OK).send(data);
     }catch(e){
+        console.log(e);
+        res.status(HttpStatus.BAD_REQUEST).send("Bad Request");
+    }
+}
+
+export const chatBotController = async (req:Request, res:Response) => {
+    const { prompt } = req.body;
+    try{
+        const data = await chatBot(prompt);
+        res.status(HttpStatus.OK).send(data);
+    }catch(e){  
         console.log(e);
         res.status(HttpStatus.BAD_REQUEST).send("Bad Request");
     }

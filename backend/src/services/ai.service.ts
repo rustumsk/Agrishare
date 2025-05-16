@@ -60,3 +60,27 @@ export const convertToText = async (media: MediaItem[]): Promise<any[]> => {
     throw error;
   }
 };
+
+export const chatBot = async (prompt: string): Promise<any> => {
+  try {
+    const form = new FormData();
+    form.append("prompt", prompt);
+
+    const response = await axios.post(
+      `${process.env.PYTHONAPI}/chat`,
+      form,
+      {
+        headers: form.getHeaders(),
+      }
+    );
+
+    if (response.data.response) {
+      return response.data.response;
+    } else {
+      throw new Error(response.data.error || "Unknown error from chatbot");
+    }
+  } catch (error: any) {
+    console.error("Error chatting with bot:", error.message || error);
+    throw error;
+  }
+};

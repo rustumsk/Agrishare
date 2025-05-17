@@ -7,7 +7,10 @@ const blogRouter: Router = Router();
 
 blogRouter.post('/', authorizeUser, createBlogController);
 blogRouter.get('/', authorizeUser, getAllBlogsController);
-blogRouter.get('/:id', getBlogController)
+blogRouter.get('/:id/:user_id', getBlogController);
+blogRouter.post('/like', authorizeUser, likeBlogController);
+blogRouter.post('/unlike', authorizeUser, unlikeBlogController);
+blogRouter.post('/comment', authorizeUser, commentBlogController);
 
 
 

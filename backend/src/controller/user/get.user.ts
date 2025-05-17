@@ -4,6 +4,7 @@ import { getFollowerSuggestion, getUserById, getMutualFollowers, getUserForProfi
 import { followUser } from "../../model/user/follow.user";
 import { HttpStatus } from "../../config/types/enum";
 import { messageUser, getMessages } from '../../model/user/user.message';
+import { updateUserProfile } from "../../model/user/update.user";
 
 export const getFollowerSuggestionController = async(req: Request, res:Response) =>{
     const {user_id} = req.query;
@@ -86,3 +87,23 @@ export const getUserForProfleController = async(req:Request, res:Response) =>{
         res.status(HttpStatus.BAD_REQUEST).send("Bad Request");
     }
 }
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { user_id, user_name, image_url } = req.body;
+
+    if (!user_id || !user_name || !image_url) {
+      return res.status(400).json({ message: "user_id, user_name, and image_url are required" });
+    }
+
+    const updatedUser = await updateUserProfile(user_id, user_name, image_url);
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error("Failed to update user:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
     socket.on('notify', (data) => {
       const {receiver_id, type} = data;
       console.log(receiver_id, type);
+      console.log("Notify")
       io.to(receiver_id).emit('notification', {
         type: type,
         time: new Date().toISOString(),

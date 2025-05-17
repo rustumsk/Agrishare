@@ -5,43 +5,52 @@ export const getPost = async (postId: number): Promise<any> => {
 }
 
 //todo get make user photo
-export const getPostForFeed = async (): Promise<any> => {
+export const getPostForFeed = async (currentUserId: any): Promise<any> => {
     try {
-        const result = await pool.query(`
-        SELECT 
-            p.post_id,
-            p.post_description,
-            p.user_id,
-            p.created_at,
-            u.user_name,
-            u.image_url AS user_image,
+        const result = await pool.query(
+            `
+            SELECT 
+                p.post_id,
+                p.post_description,
+                p.user_id,
+                p.created_at,
+                u.user_name,
+                u.image_url AS user_image,
 
-            COUNT(DISTINCT pl.like_id) AS like_count,
-            COUNT(DISTINCT pc.comment_id) AS comment_count,
+                COUNT(DISTINCT pl.like_id) AS like_count,
+                COUNT(DISTINCT pc.comment_id) AS comment_count,
 
-            COALESCE(
-                JSON_AGG(DISTINCT pi.image_url)
-                FILTER (WHERE pi.image_url IS NOT NULL),
-                '[]'
-            ) AS images,
+                COALESCE(
+                    JSON_AGG(DISTINCT pi.image_url)
+                    FILTER (WHERE pi.image_url IS NOT NULL),
+                    '[]'
+                ) AS images,
 
-            COALESCE(
-                JSON_AGG(DISTINCT pv.video_url)
-                FILTER (WHERE pv.video_url IS NOT NULL),
-                '[]'
-            ) AS videos
+                COALESCE(
+                    JSON_AGG(DISTINCT pv.video_url)
+                    FILTER (WHERE pv.video_url IS NOT NULL),
+                    '[]'
+                ) AS videos,
 
-        FROM post p
-        JOIN users u ON u.user_id = p.user_id
-        LEFT JOIN post_images pi ON pi.post_id = p.post_id
-        LEFT JOIN post_videos pv ON pv.post_id = p.post_id
-        LEFT JOIN post_likes pl ON pl.post_id = p.post_id
-        LEFT JOIN post_comments pc ON pc.post_id = p.post_id
+                EXISTS (
+                    SELECT 1
+                    FROM post_likes pl2
+                    WHERE pl2.post_id = p.post_id AND pl2.user_id = $1
+                ) AS liked_by_user
 
-        GROUP BY p.post_id, p.user_id, u.user_name, u.image_url
-        ORDER BY p.created_at DESC
-        LIMIT 10 OFFSET 0
-    `);
+            FROM post p
+            JOIN users u ON u.user_id = p.user_id
+            LEFT JOIN post_images pi ON pi.post_id = p.post_id
+            LEFT JOIN post_videos pv ON pv.post_id = p.post_id
+            LEFT JOIN post_likes pl ON pl.post_id = p.post_id
+            LEFT JOIN post_comments pc ON pc.post_id = p.post_id
+
+            GROUP BY p.post_id, p.user_id, u.user_name, u.image_url
+            ORDER BY p.created_at DESC
+            LIMIT 10 OFFSET 0
+            `,
+            [currentUserId]
+        );
         return result.rows;
     } catch (e) {
         console.error(e);

@@ -81,7 +81,9 @@ export interface ServerToClientEvents {
   comment: (data: { post_id: number; comments: any;}) => void;
   newMessage: (msg: Message) => void;
   notification: (msg: any) => void;
-
+  blogLike: (data: { check: boolean, blog_count: any, user_id: number, blog_id: number}) => void;
+  blogUnlike: (data: { check: boolean, blog_count: any, user_id: number, blog_id: number}) => void;
+  blogComment: (data: { user_id:number, blog_id: number; comments: any;}) => void;
 }
 
 export interface ClientToServerEvents {
